@@ -6,14 +6,14 @@ use Illuminate\Console\Command;
 use App\Console\Core\Concerns\OptionsExtender;
 use Symfony\Component\Console\Attribute\AsCommand;
 
-#[AsCommand(name: 'make:cycle')]
-class CycleMakeCommand extends Command
+#[AsCommand(name: 'make:story')]
+class StoreMakeCommand extends Command
 {
     use OptionsExtender;
 
-    protected $signature = 'make:cycle {name : name of the cycle} {module : name of the module}';
+    protected $signature = 'make:story {name : name of the story} {module : name of the module}';
 
-    protected $description = 'Create a request cycle';
+    protected $description = 'Create a user story';
 
 
     public function handle()
