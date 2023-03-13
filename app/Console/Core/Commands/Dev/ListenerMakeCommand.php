@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Console\Core\Commands\Dev;
+
+use Illuminate\Support\Str;
+use Illuminate\Console\GeneratorCommand;
+use App\Console\Core\Concerns\OptionsExtender;
+use Illuminate\Foundation\Console\ListenerMakeCommand as BaseListenerMakeCommand;
+
+class ListenerMakeCommand extends BaseListenerMakeCommand
+{
+    use OptionsExtender;
+
+    protected function getDefaultNamespace($rootNamespace): string
+    {
+        if (!is_null($targetModule = $this->input->getOption('module'))) {
+            return get_module_namespace($rootNamespace, $targetModule,
+                [
+                    'Manager',
+                    'Listeners'
+                ]
+            );
+        }
+
+        return parent::getDefaultNamespace($rootNamespace);
+    }
+
+    protected function buildClass($name): array|string
+    {
+        $event = $this->option('event');
+
+        if (! Str::startsWith($event, [
+            $this->laravel->getNamespace(),
+            'Illuminate',
+            '\\',
+        ])) {
+            if ($this->hasOption('module') && ($module = $this->option('module'))) {
+                $event = get_module_namespace($this->laravel->getNamespace(), $module, ['Manager', 'Events', $event]);
+            } else {
+                $event = $this->laravel->getNamespace().'Events\\'.str_replace('/', '\\', $event);
+            }
+        }
+
+        $stub = str_replace(
+            ['DummyEvent', '{{ event }}'], class_basename($event), GeneratorCommand::buildClass($name)
+        );
+
+        return str_replace(
+            ['DummyFullEvent', '{{ eventNamespace }}'], trim($event, '\\'), $stub
+        );
+    }
+}
