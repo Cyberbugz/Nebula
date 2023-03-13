@@ -1,1 +1,3 @@
-#FDW
+# Nebula
+
+**Modularized Laravel framework.**
