@@ -7,7 +7,7 @@ use App\Modules\User\Domain\ViewModels\Contracts\AuthenticatedUserModelInterface
 
 class AuthenticatedUserModel implements AuthenticatedUserModelInterface
 {
-    public function __construct(protected Authenticatable $user, protected string $token)
+    public function __construct(protected readonly Authenticatable $user, protected readonly string $token)
     {
     }
 
