@@ -8,7 +8,7 @@ use App\Modules\User\Domain\Repositories\UserRepository;
 use App\Modules\User\Domain\ViewModels\AuthenticatedUserModel;
 use App\Modules\User\Domain\ViewModels\Contracts\AuthenticatedUserModelInterface;
 
-class UserRegistrationService
+final class UserRegistrationService
 {
     public function __construct(protected UserRepository $repository)
     {
