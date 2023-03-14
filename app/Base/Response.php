@@ -4,7 +4,7 @@ namespace App\Base;
 
 use Closure;
 use Throwable;
-use App\Helpers\Logger;
+use App\Support\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Responses\ErrorResponse;

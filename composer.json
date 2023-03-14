@@ -1,6 +1,6 @@
 {
     "name": "mansonxasthur/nebula",
-    "version": "v2.0.4",
+    "version": "v2.1.0",
     "type": "project",
     "description": "Nebula is a modularized Laravel framework.",
     "keywords": ["framework", "laravel", "nebula"],
@@ -28,7 +28,7 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Helpers/functions.php"
+            "app/Support/helpers.php"
         ]
     },
     "autoload-dev": {
