@@ -1,5 +1,6 @@
 {
     "name": "mansonxasthur/nebula",
+    "version": "v2.0.2",
     "type": "project",
     "description": "Nebula is a modularized Laravel framework.",
     "keywords": ["framework", "laravel", "nebula"],
