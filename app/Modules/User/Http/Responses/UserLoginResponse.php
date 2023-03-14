@@ -12,6 +12,9 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserLoginResponse extends Response
 {
+    /**
+     * @param    \App\Modules\User\Domain\ViewModels\Contracts\AuthenticatedUserModelInterface    $resource
+     */
     protected function createResource(mixed $resource): JsonResource
     {
         return (new UserResource($resource->user()))
