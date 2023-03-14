@@ -7,7 +7,7 @@ use App\Console\Core\Concerns\OptionsExtender;
 use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'make:story')]
-class StoreMakeCommand extends Command
+class StoryMakeCommand extends Command
 {
     use OptionsExtender;
 
