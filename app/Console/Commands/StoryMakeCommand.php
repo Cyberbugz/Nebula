@@ -3,9 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Console\Core\Concerns\OptionsExtender;
-use Symfony\Component\Console\Attribute\AsCommand;
 use App\Console\Core\Concerns\AbsolutePathChecker;
+use Symfony\Component\Console\Attribute\AsCommand;
 
 #[AsCommand(name: 'make:story')]
 class StoryMakeCommand extends Command
@@ -16,11 +15,10 @@ class StoryMakeCommand extends Command
 
     protected $description = 'Create a user story';
 
-
     public function handle()
     {
         $this->checkAbsolutePath();
-        $name   = $this->argument('name');
+        $name = $this->argument('name');
         $module = $this->argument('module');
         $guard = $this->option('guard');
         $this->createController($name, $module, $guard);
@@ -30,7 +28,7 @@ class StoryMakeCommand extends Command
     protected function createController(string $name, string $module, string|null $guard)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
             '--all' => true,
         ];
@@ -45,7 +43,7 @@ class StoryMakeCommand extends Command
     protected function createTest(string $name, string $module, string|null $guard)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
 

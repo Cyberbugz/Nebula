@@ -13,8 +13,8 @@ class RequestMakeCommand extends BaseRequestMakeCommand
 
     protected function getPath($name): string
     {
-        if (!is_null($module = $this->option('module'))) {
-            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Http', 'Requests', $this->checkGuard(),]), '')->finish('Request');
+        if (! is_null($module = $this->option('module'))) {
+            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Http', 'Requests', $this->checkGuard()]), '')->finish('Request');
             if (str_starts_with($name, '\\')) {
                 $name = str_replace('\\', '', $name);
             }
@@ -27,12 +27,12 @@ class RequestMakeCommand extends BaseRequestMakeCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($rootNamespace, $module,
                 [
                     'Http',
                     'Requests',
-                    $this->checkGuard()
+                    $this->checkGuard(),
                 ]
             );
         }
@@ -43,6 +43,7 @@ class RequestMakeCommand extends BaseRequestMakeCommand
     protected function qualifyClass($name): string
     {
         $name = (string) Str::of($name)->ucfirst()->finish('Request');
+
         return parent::qualifyClass($name);
     }
 }

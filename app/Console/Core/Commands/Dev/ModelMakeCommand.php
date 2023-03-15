@@ -19,14 +19,16 @@ class ModelMakeCommand extends BaseModelMakeCommand
         if ($this->option('absolute')) {
             $arguments['--absolute'] = $this->option('absolute');
         }
+
         return $arguments;
     }
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($this->option('module'))) {
+        if (! is_null($this->option('module'))) {
             return get_module_namespace($rootNamespace, $this->option('module'), ['Domain', 'Entities']);
         }
+
         return parent::getDefaultNamespace($rootNamespace);
     }
 
@@ -80,9 +82,9 @@ class ModelMakeCommand extends BaseModelMakeCommand
         $modelName = $this->qualifyClass($this->getNameInput());
 
         $arguments = [
-            'name'       => "{$controller}Controller",
-            '--model'    => ($this->option('resource') || $this->option('api')) && !$this->option('module') ? $modelName : null,
-            '--api'      => $this->option('api'),
+            'name' => "{$controller}Controller",
+            '--model' => ($this->option('resource') || $this->option('api')) && ! $this->option('module') ? $modelName : null,
+            '--api' => $this->option('api'),
             '--requests' => $this->option('requests') || $this->option('all'),
         ];
 
@@ -97,7 +99,7 @@ class ModelMakeCommand extends BaseModelMakeCommand
 
         $arguments = [
             'name' => "{$policy}Policy",
-            '--model' => '\\' . $this->qualifyClass($this->getNameInput()),
+            '--model' => '\\'.$this->qualifyClass($this->getNameInput()),
         ];
 
         $arguments = $this->checkModulePath($arguments);

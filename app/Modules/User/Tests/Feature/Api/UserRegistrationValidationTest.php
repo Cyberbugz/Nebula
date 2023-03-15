@@ -13,6 +13,7 @@ class UserRegistrationValidationTest extends TestCase
      * @test
      *
      * @dataProvider validations
+     *
      * @group        user
      */
     public function it_validates_user_registration_inputs($given, $errorField, $expected): void
@@ -68,22 +69,22 @@ class UserRegistrationValidationTest extends TestCase
                 'email',
                 'The email field is required.',
             ],
-            'email field is invalid email address'             => [
+            'email field is invalid email address' => [
                 ['email' => Str::random()],
                 'email',
                 'The email field must be a valid email address.',
             ],
-            'email has already been taken'             => [
+            'email has already been taken' => [
                 ['email' => 'john.doe@example.com'],
                 'email',
                 'The email has already been taken.',
             ],
-            'email maximum length is 100'             => [
-                ['email' => Str::random(100) . '@example.com'],
+            'email maximum length is 100' => [
+                ['email' => Str::random(100).'@example.com'],
                 'email',
                 'The email field must not be greater than 100 characters.',
             ],
-            'password field is required'         => [
+            'password field is required' => [
                 [],
                 'password',
                 'The password field is required.',

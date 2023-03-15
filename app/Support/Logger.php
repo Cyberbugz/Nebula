@@ -30,15 +30,13 @@ class Logger
     public static function error(string $message, Throwable $e, array $context = [], string $channel = 'errors'): void
     {
         static::log('error', $message,
-            array_merge($context, static::buildExceptionContext($e))
-            , $channel);
+            array_merge($context, static::buildExceptionContext($e)), $channel);
     }
 
     public static function emergency(string $message, Throwable $e, array $context = [], string $channel = 'errors'): void
     {
         static::log('emergency', $message,
-            array_merge($context, static::buildExceptionContext($e))
-            , $channel);
+            array_merge($context, static::buildExceptionContext($e)), $channel);
     }
 
     public static function log(string $level, string $message, array $context, string $channel): void

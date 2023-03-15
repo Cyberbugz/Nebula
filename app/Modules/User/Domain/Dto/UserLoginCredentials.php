@@ -9,4 +9,5 @@ use Illuminate\Support\Fluent;
  * @property string $password
  */
 class UserLoginCredentials extends Fluent
-{}
+{
+}

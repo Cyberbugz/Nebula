@@ -11,9 +11,9 @@ trait OptionsExtender
     protected function getOptions(): array
     {
         return array_merge(parent::getOptions(), [
-           ['module', 'M', InputOption::VALUE_REQUIRED, 'Specify a module.'],
-           ['absolute', 'A', InputOption::VALUE_OPTIONAL, 'Specify absolute modules path.'],
-           ['guard', 'G', InputOption::VALUE_OPTIONAL, 'Specify guard environment.']
+            ['module', 'M', InputOption::VALUE_REQUIRED, 'Specify a module.'],
+            ['absolute', 'A', InputOption::VALUE_OPTIONAL, 'Specify absolute modules path.'],
+            ['guard', 'G', InputOption::VALUE_OPTIONAL, 'Specify guard environment.'],
         ]);
     }
 

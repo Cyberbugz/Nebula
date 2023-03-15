@@ -20,12 +20,12 @@ abstract class Response implements ResponseInterface
     private Closure|null $onLogObserver = null;
 
     /**
-     * @var callable[] $onSuccessHandlers
+     * @var callable[]
      */
     private array $onSuccessHandlers = [];
 
     /**
-     * @var callable[] $onFailureHandlers
+     * @var callable[]
      */
     private array $onFailureHandlers = [];
 
@@ -36,10 +36,12 @@ abstract class Response implements ResponseInterface
         try {
             $data = call_user_func([$handler, 'handle'], $this, $request);
             $this->fireSuccessChain($data);
+
             return $this->createResource($data);
         } catch (Throwable $e) {
             $this->logError($handler, $request, $e);
             $this->fireFailureChain($request);
+
             return $this->error($e);
         }
     }
@@ -47,6 +49,7 @@ abstract class Response implements ResponseInterface
     final public function silent(): static
     {
         $this->silence = true;
+
         return $this;
     }
 
@@ -59,6 +62,7 @@ abstract class Response implements ResponseInterface
             throw new EventInjectionRestrictedException($this);
         }
         $this->onSuccessHandlers[] = $handler;
+
         return $this;
     }
 
@@ -72,12 +76,14 @@ abstract class Response implements ResponseInterface
         }
 
         $this->onFailureHandlers[] = $handler;
+
         return $this;
     }
 
     final public function onLog(Closure $handler): static
     {
         $this->onLogObserver = $handler;
+
         return $this;
     }
 
@@ -104,16 +110,19 @@ abstract class Response implements ResponseInterface
             )
         );
     }
+
     final protected function getClassName(RequestHandlerInterface $handler): string
     {
         $namespace = explode('\\', get_class($handler));
+
         return array_pop($namespace);
     }
 
     final protected function fireSuccessChain(mixed $resource): void
     {
-        if ($this->silence)
+        if ($this->silence) {
             return;
+        }
 
         foreach ($this->onSuccessHandlers as $handler) {
             $handler($resource);
@@ -124,8 +133,9 @@ abstract class Response implements ResponseInterface
 
     final protected function fireFailureChain(Request $request): void
     {
-        if ($this->silence)
+        if ($this->silence) {
             return;
+        }
 
         foreach ($this->onFailureHandlers as $handler) {
             $handler($request);

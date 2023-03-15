@@ -21,8 +21,8 @@ class ServiceMakeCommand extends GeneratorCommand
 
     protected function getPath($name): string
     {
-        if (!is_null($module = $this->option('module'))) {
-            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Services', $this->checkGuard(),]), '')->finish('Service');
+        if (! is_null($module = $this->option('module'))) {
+            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Services', $this->checkGuard()]), '')->finish('Service');
             if (str_starts_with($name, '\\')) {
                 $name = str_replace('\\', '', $name);
             }
@@ -47,11 +47,11 @@ class ServiceMakeCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($rootNamespace, $module,
                 [
                     'Services',
-                    $this->checkGuard()
+                    $this->checkGuard(),
                 ]
             );
         }
@@ -62,6 +62,7 @@ class ServiceMakeCommand extends GeneratorCommand
     protected function qualifyClass($name): string
     {
         $name = (string) Str::of($name)->ucfirst()->finish('Service');
+
         return parent::qualifyClass($name);
     }
 }

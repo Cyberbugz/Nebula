@@ -8,11 +8,13 @@ trait GuardChecker
     {
         $guard = $this->option('guard');
 
-        if (!$guard)
+        if (! $guard) {
             return null;
+        }
 
-        if (!in_array(strtolower($guard), array_keys(config('auth.guards', []))))
+        if (! in_array(strtolower($guard), array_keys(config('auth.guards', [])))) {
             return null;
+        }
 
         return ucfirst($guard);
     }

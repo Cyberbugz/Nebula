@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response as SymphonyResponse;
 class UserRegistrationResponse extends Response
 {
     /**
-     * @param    \App\Modules\User\Domain\ViewModels\Contracts\AuthenticatedUserModelInterface    $resource
+     * @param  \App\Modules\User\Domain\ViewModels\Contracts\AuthenticatedUserModelInterface  $resource
      */
     protected function createResource(mixed $resource): JsonResponse|JsonResource|LengthAwarePaginator
     {
@@ -24,7 +24,7 @@ class UserRegistrationResponse extends Response
     }
 
     /**
-     * @param    \App\Modules\User\Domain\ViewModels\Contracts\AuthenticatedUserModelInterface    $resource
+     * @param  \App\Modules\User\Domain\ViewModels\Contracts\AuthenticatedUserModelInterface  $resource
      */
     protected function success(mixed $resource): void
     {

@@ -8,7 +8,6 @@ trait AbsolutePathChecker
     {
         if ($absolute = $this->option('absolute')) {
             config()->set('app.modules_path', ucfirst($absolute));
-
         }
     }
 }

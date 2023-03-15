@@ -19,10 +19,12 @@ class MigrateMakeCommand extends BaseMigrateMakeCommand
 
     protected function getMigrationPath(): string
     {
-        if (!is_null($targetModule = $this->input->getOption('module'))) {
+        if (! is_null($targetModule = $this->input->getOption('module'))) {
             $this->input->setOption('realpath', true);
+
             return get_module_path($targetModule, ['Domain', 'Database', 'Migrations']);
         }
+
         return parent::getMigrationPath();
     }
 }

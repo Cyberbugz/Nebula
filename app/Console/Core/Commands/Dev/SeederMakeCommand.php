@@ -12,15 +12,16 @@ class SeederMakeCommand extends BaseSeederMakeCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             if (str_starts_with($rootNamespace, $this->rootNamespace())) {
                 return $rootNamespace;
             }
+
             return get_module_namespace($rootNamespace, $module,
                 [
                     'Domain',
                     'Database',
-                    'Seeders'
+                    'Seeders',
                 ]
             );
         }
@@ -30,7 +31,7 @@ class SeederMakeCommand extends BaseSeederMakeCommand
 
     protected function getPath($name): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Domain', 'Database', 'Seeders']), '');
             if (str_starts_with($name, '\\')) {
                 $name = str_replace('\\', '', $name);
@@ -44,15 +45,16 @@ class SeederMakeCommand extends BaseSeederMakeCommand
 
     protected function rootNamespace(): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($this->laravel->getNamespace(), $module,
                 [
                     'Domain',
                     'Database',
-                    'Seeders'
+                    'Seeders',
                 ]
             );
         }
+
         return parent::rootNamespace();
     }
 }

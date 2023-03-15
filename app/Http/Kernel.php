@@ -18,13 +18,13 @@ class Kernel extends HttpKernel
 
     protected $middlewareGroups = [
         'api' => [
-//             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            //             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
         'test' => [
-            \App\Http\Middleware\ForbidProductionRequests::class
-        ]
+            \App\Http\Middleware\ForbidProductionRequests::class,
+        ],
     ];
 
     protected $middlewareAliases = [

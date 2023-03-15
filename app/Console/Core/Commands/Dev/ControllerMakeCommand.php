@@ -45,6 +45,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
             $replace = array_merge($replace, $this->buildResponseReplacements($name));
             $replace = array_merge($replace, $this->buildServiceReplacements($name));
         }
+
         return str_replace(
             array_keys($replace), array_values($replace), parent::buildClass($baseName)
         );
@@ -58,12 +59,13 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
                 'Http',
                 'Requests',
                 $this->checkGuard(),
-                $name
+                $name,
             ]
         );
+
         return [
             '{{ requestNamespace }}' => $requestClass,
-            '{{ request }}'          => class_basename($requestClass),
+            '{{ request }}' => class_basename($requestClass),
         ];
     }
 
@@ -75,12 +77,13 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
                 'Http',
                 'Responses',
                 $this->checkGuard(),
-                $name
+                $name,
             ]
         );
+
         return [
             '{{ responseNamespace }}' => $responseClass,
-            '{{ response }}'          => class_basename($responseClass),
+            '{{ response }}' => class_basename($responseClass),
         ];
     }
 
@@ -91,12 +94,13 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
             [
                 'Services',
                 $this->checkGuard(),
-                $name
+                $name,
             ]
         );
+
         return [
             '{{ serviceNamespace }}' => $serviceClass,
-            '{{ service }}'          => class_basename($serviceClass),
+            '{{ service }}' => class_basename($serviceClass),
         ];
     }
 
@@ -109,8 +113,8 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
 
     protected function getPath($name): string
     {
-        if (!is_null($module = $this->option('module'))) {
-            $name = (string)Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, [
+        if (! is_null($module = $this->option('module'))) {
+            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, [
                 'Http', 'Controllers', $this->checkGuard(),
             ]), '')->finish('Controller');
             if (str_starts_with($name, '\\')) {
@@ -125,29 +129,33 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
 
     protected function getStub(): string
     {
-        if (!is_null($this->option('module'))) {
-            return $this->resolveStubPath('/stubs/controller.module' . ($this->option('all') ? '-all' : '' ). '.stub');
+        if (! is_null($this->option('module'))) {
+            return $this->resolveStubPath('/stubs/controller.module'.($this->option('all') ? '-all' : '').'.stub');
         }
+
         return parent::getStub();
     }
+
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($rootNamespace, $module, ['Http', 'Controllers', $this->checkGuard()]);
         }
+
         return parent::getDefaultNamespace($rootNamespace);
     }
 
     protected function qualifyClass($name): string
     {
-        $name = (string)Str::of($name)->ucfirst()->finish('Controller');
+        $name = (string) Str::of($name)->ucfirst()->finish('Controller');
+
         return parent::qualifyClass($name);
     }
 
     protected function createRequest(string $name, string $module)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
         if ($guard = $this->option('guard')) {
@@ -159,7 +167,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     protected function createResponse(string $name, string $module)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
         if ($guard = $this->option('guard')) {
@@ -171,7 +179,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     protected function createService(string $name, string $module)
     {
         $arguments = [
-            'name'     => $name,
+            'name' => $name,
             '--module' => $module,
         ];
         if ($guard = $this->option('guard')) {

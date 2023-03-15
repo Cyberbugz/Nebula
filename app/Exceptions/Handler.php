@@ -32,15 +32,16 @@ class Handler extends ExceptionHandler
             if ($request->path() === '/') {
                 return response()->json(['code' => Response::HTTP_OK, 'message' => sprintf('Welcome to %s portal api.', Config::get('app.name'))]);
             }
-            return response()->json(['code' => Response::HTTP_NOT_FOUND,'message' => 'Sometimes the most scenic roads in life are the detours you didn\'t mean to take.'], Response::HTTP_NOT_FOUND);
+
+            return response()->json(['code' => Response::HTTP_NOT_FOUND, 'message' => 'Sometimes the most scenic roads in life are the detours you didn\'t mean to take.'], Response::HTTP_NOT_FOUND);
         });
 
         $this->renderable(function (AuthenticationException $e) {
-            return response()->json(['code' => Response::HTTP_UNAUTHORIZED,'message' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return response()->json(['code' => Response::HTTP_UNAUTHORIZED, 'message' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         });
     }
 
-    protected function convertValidationExceptionToResponse(ValidationException $e, $request): \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\Response|null
+    protected function convertValidationExceptionToResponse(ValidationException $e, $request): \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|Response|null
     {
         if ($e->response) {
             return $e->response;

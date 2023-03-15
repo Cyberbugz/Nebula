@@ -11,4 +11,5 @@ use Illuminate\Support\Fluent;
  * @property string $password
  */
 class UserRegistrationData extends Fluent
-{}
+{
+}

@@ -16,10 +16,10 @@ class UserLoginTest extends TestCase
     public function it_can_login()
     {
         $password = $this->faker->password();
-        $user     = User::factory()->state(['password' => bcrypt($password)])->create();
+        $user = User::factory()->state(['password' => bcrypt($password)])->create();
         $this->assertDatabaseCount('users', 1);
         $res = $this->json('post', '/api/login', [
-            'email'    => $user->email,
+            'email' => $user->email,
             'password' => $password,
         ]);
 
@@ -35,9 +35,9 @@ class UserLoginTest extends TestCase
     public function it_fails_when_provided_with_wrong_credentials(): void
     {
         $password = $this->faker->password();
-        $user     = User::factory()->state(['password' => bcrypt($password)])->create();
-        $res      = $this->json('post', '/api/login', [
-            'email'    => $user->email,
+        $user = User::factory()->state(['password' => bcrypt($password)])->create();
+        $res = $this->json('post', '/api/login', [
+            'email' => $user->email,
             'password' => 'secret',
         ]);
 

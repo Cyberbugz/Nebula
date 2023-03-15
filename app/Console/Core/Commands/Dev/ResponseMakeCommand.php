@@ -21,8 +21,8 @@ class ResponseMakeCommand extends GeneratorCommand
 
     protected function getPath($name): string
     {
-        if (!is_null($module = $this->option('module'))) {
-            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Http', 'Responses', $this->checkGuard(),]), '')->finish('Response');
+        if (! is_null($module = $this->option('module'))) {
+            $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Http', 'Responses', $this->checkGuard()]), '')->finish('Response');
             if (str_starts_with($name, '\\')) {
                 $name = str_replace('\\', '', $name);
             }
@@ -47,12 +47,12 @@ class ResponseMakeCommand extends GeneratorCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($rootNamespace, $module,
                 [
                     'Http',
                     'Responses',
-                    $this->checkGuard()
+                    $this->checkGuard(),
                 ]
             );
         }
@@ -63,6 +63,7 @@ class ResponseMakeCommand extends GeneratorCommand
     protected function qualifyClass($name): string
     {
         $name = (string) Str::of($name)->ucfirst()->finish('Response');
+
         return parent::qualifyClass($name);
     }
 }

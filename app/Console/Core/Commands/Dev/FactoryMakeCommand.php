@@ -13,12 +13,12 @@ class FactoryMakeCommand extends BaseFactoryMakeCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             return get_module_namespace($this->laravel->getNamespace(), $module,
                 [
                     'Domain',
                     'Database',
-                    'Factories'
+                    'Factories',
                 ]
             );
         }
@@ -28,7 +28,7 @@ class FactoryMakeCommand extends BaseFactoryMakeCommand
 
     protected function getPath($name): string
     {
-        if (!is_null($module = $this->option('module'))) {
+        if (! is_null($module = $this->option('module'))) {
             $name = (string) Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, ['Domain', 'Database', 'Factories']), '')->finish('Factory');
             if (str_starts_with($name, '\\')) {
                 $name = str_replace('\\', '', $name);
@@ -43,6 +43,7 @@ class FactoryMakeCommand extends BaseFactoryMakeCommand
     protected function getNamespace($name): string
     {
         $name = (string) Str::of($name)->replaceFirst('Database\\Factories\\', $this->laravel->getNamespace());
+
         return parent::getNamespace($name);
     }
 

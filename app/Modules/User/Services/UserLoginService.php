@@ -21,10 +21,11 @@ final class UserLoginService
     public function handle(UserLoginCredentials $credentials): AuthenticatedUserModelInterface
     {
         if (
-            !($user = $this->getUser($credentials->email)) ||
-            !Hash::check($credentials->password, $user->password)
-        )
+            ! ($user = $this->getUser($credentials->email)) ||
+            ! Hash::check($credentials->password, $user->password)
+        ) {
             throw new UnauthorizedHttpException('Basic', 'Invalid credentials.');
+        }
 
         return new AuthenticatedUserModel(
             $user,

@@ -14,7 +14,7 @@ trait ModelQualifier
         $rootNamespace = $this->rootNamespace();
 
         if (($startsWithRoot = Str::startsWith($model, $rootNamespace)) || Str::startsWith($model, config('app.modules_path'))) {
-            return $startsWithRoot ? $model : $rootNamespace . $model;
+            return $startsWithRoot ? $model : $rootNamespace.$model;
         }
 
         $module = null;

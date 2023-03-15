@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -37,9 +37,9 @@ class RouteServiceProvider extends ServiceProvider
         $registrar = Route::prefix('api')->middleware('api');
 
         $modulesPath = base_path('app/Modules');
-        $modules = array_filter(scandir($modulesPath), fn($module) => !in_array($module, ['.', '..']));
+        $modules = array_filter(scandir($modulesPath), fn ($module) => ! in_array($module, ['.', '..']));
         foreach ($modules as $module) {
-            $apiRoutes = $modulesPath . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . 'Routes/api.php';
+            $apiRoutes = $modulesPath.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.'Routes/api.php';
             if (file_exists($apiRoutes)) {
                 $registrar->group($apiRoutes);
             }

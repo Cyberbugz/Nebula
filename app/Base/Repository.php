@@ -20,11 +20,12 @@ abstract class Repository
         $model = $this->model
             ->query()
             ->find($id);
-        if (!$model) {
+        if (! $model) {
             return null;
         }
 
         $model->update($payload);
+
         return $model;
     }
 
@@ -59,6 +60,7 @@ abstract class Repository
     public function setModel(Eloquent $model): static
     {
         $this->model = $model;
+
         return $this;
     }
 }
