@@ -6,23 +6,18 @@ use Symfony\Component\Console\Input\InputOption;
 
 trait OptionsExtender
 {
-    protected function checkAbsolutePath(): void
-    {
-        if ($absolute = $this->option('absolute')) {
-            config()->set('app.modules_path', ucfirst($absolute));
-
-        }
-    }
+    use AbsolutePathChecker;
 
     protected function getOptions(): array
     {
         return array_merge(parent::getOptions(), [
            ['module', 'M', InputOption::VALUE_REQUIRED, 'Specify a module.'],
            ['absolute', 'A', InputOption::VALUE_OPTIONAL, 'Specify absolute modules path.'],
+           ['guard', 'G', InputOption::VALUE_OPTIONAL, 'Specify guard environment.']
         ]);
     }
 
-    public function handle()
+    public function handle(): void
     {
         $this->checkAbsolutePath();
         parent::handle();

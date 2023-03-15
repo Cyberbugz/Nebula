@@ -8,7 +8,10 @@ use Tests\TestCase;
 
 class {{ class }} extends TestCase
 {
-    /** @test */
+    /**
+    * @test
+    * {{ moduleGroup }}
+    */
     public function example(): void
     {
         $response = $this->get('/');

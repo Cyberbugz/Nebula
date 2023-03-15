@@ -3,21 +3,28 @@
 namespace App\Console\Core\Commands\Dev;
 
 use Illuminate\Support\Str;
+use App\Console\Core\Concerns\GuardChecker;
 use App\Console\Core\Concerns\OptionsExtender;
 use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Foundation\Console\TestMakeCommand as BaseTestMakeCommand;
 
 class TestMakeCommand extends BaseTestMakeCommand
 {
-    use OptionsExtender {
-        getOptions as concernGetOptions;
-    }
+    use OptionsExtender, GuardChecker;
 
-    protected function getOptions(): array
+    protected function buildClass($name): array|string
     {
-        return array_merge($this->concernGetOptions(), [
-            ['guard', 'G', InputOption::VALUE_OPTIONAL, 'Specify test guard environment']
-        ]);
+        $replace = [];
+
+        if ($module = strtolower($this->option('module'))) {
+            $replace = [
+                '{{ moduleGroup }}' => "@group $module"
+            ];
+        }
+
+        return str_replace(
+            array_keys($replace), array_values($replace), parent::buildClass($name)
+        );
     }
 
     protected function getPath($name): string
@@ -28,7 +35,7 @@ class TestMakeCommand extends BaseTestMakeCommand
                 $name = str_replace('\\', '', $name);
             }
 
-            return get_module_path($module, ['Tests', $this->option('unit') ? 'Unit': 'Feature', "$name.php"]);
+            return get_module_path($module, ['Tests', $this->option('unit') ? 'Unit': 'Feature', $this->checkGuard(), "$name.php"]);
         }
 
         return parent::getPath($name);
@@ -62,18 +69,5 @@ class TestMakeCommand extends BaseTestMakeCommand
     {
         $name = (string) Str::of($name)->ucfirst()->finish('Test');
         return parent::qualifyClass($name);
-    }
-
-    protected function checkGuard(): string|null
-    {
-        $guard = $this->option('guard');
-
-        if (!$guard)
-            return null;
-
-        if (!in_array(strtolower($guard), array_keys(config('auth.guards', []))))
-            return null;
-
-        return ucfirst($guard);
     }
 }

@@ -5,39 +5,53 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Console\Core\Concerns\OptionsExtender;
 use Symfony\Component\Console\Attribute\AsCommand;
+use App\Console\Core\Concerns\AbsolutePathChecker;
 
 #[AsCommand(name: 'make:story')]
 class StoryMakeCommand extends Command
 {
-    use OptionsExtender;
+    use AbsolutePathChecker;
 
-    protected $signature = 'make:story {name : name of the story} {module : name of the module}';
+    protected $signature = 'make:story {name : name of the story} {module : name of the module} {--guard= : Specify environment guard} {--absolute= : Specify modules absolute path}';
 
     protected $description = 'Create a user story';
 
 
     public function handle()
     {
+        $this->checkAbsolutePath();
         $name   = $this->argument('name');
         $module = $this->argument('module');
-        $this->createController($name, $module);
-        $this->createTest($name, $module);
+        $guard = $this->option('guard');
+        $this->createController($name, $module, $guard);
+        $this->createTest($name, $module, $guard);
     }
 
-    protected function createController(string $name, string $module)
+    protected function createController(string $name, string $module, string|null $guard)
     {
-        $this->call('make:controller', [
+        $arguments = [
             'name'     => $name,
             '--module' => $module,
             '--all' => true,
-        ]);
+        ];
+
+        if ($guard) {
+            $arguments['--guard'] = $guard;
+        }
+
+        $this->call('make:controller', $arguments);
     }
 
-    protected function createTest(string $name, string $module)
+    protected function createTest(string $name, string $module, string|null $guard)
     {
-        $this->call('make:test', [
+        $arguments = [
             'name'     => $name,
             '--module' => $module,
-        ]);
+        ];
+
+        if ($guard) {
+            $arguments['--guard'] = $guard;
+        }
+        $this->call('make:test', $arguments);
     }
 }

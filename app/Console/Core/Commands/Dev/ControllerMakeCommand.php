@@ -3,13 +3,14 @@
 namespace App\Console\Core\Commands\Dev;
 
 use Illuminate\Support\Str;
+use App\Console\Core\Concerns\GuardChecker;
 use App\Console\Core\Concerns\OptionsExtender;
 use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Routing\Console\ControllerMakeCommand as BaseControllerMakeCommand;
 
 class ControllerMakeCommand extends BaseControllerMakeCommand
 {
-    use OptionsExtender {
+    use GuardChecker, OptionsExtender {
         getOptions as concernGetOptions;
     }
 
@@ -56,6 +57,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
             [
                 'Http',
                 'Requests',
+                $this->checkGuard(),
                 $name
             ]
         );
@@ -72,6 +74,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
             [
                 'Http',
                 'Responses',
+                $this->checkGuard(),
                 $name
             ]
         );
@@ -87,6 +90,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
         $serviceClass = get_module_namespace(trim($this->rootNamespace(), '\\'), $this->option('module'),
             [
                 'Services',
+                $this->checkGuard(),
                 $name
             ]
         );
@@ -107,13 +111,13 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     {
         if (!is_null($module = $this->option('module'))) {
             $name = (string)Str::of($name)->replaceFirst(get_module_namespace($this->laravel->getNamespace(), $module, [
-                'Http', 'Controllers',
+                'Http', 'Controllers', $this->checkGuard(),
             ]), '')->finish('Controller');
             if (str_starts_with($name, '\\')) {
                 $name = str_replace('\\', '', $name);
             }
 
-            return get_module_path($module, ['Http', 'Controllers', "$name.php"]);
+            return get_module_path($module, ['Http', 'Controllers', $this->checkGuard(), "$name.php"]);
         }
 
         return parent::getPath($name);
@@ -129,7 +133,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     protected function getDefaultNamespace($rootNamespace): string
     {
         if (!is_null($module = $this->option('module'))) {
-            return get_module_namespace($rootNamespace, $module, ['Http', 'Controllers']);
+            return get_module_namespace($rootNamespace, $module, ['Http', 'Controllers', $this->checkGuard()]);
         }
         return parent::getDefaultNamespace($rootNamespace);
     }
@@ -142,25 +146,37 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
 
     protected function createRequest(string $name, string $module)
     {
-        $this->call('make:request', [
+        $arguments = [
             'name'     => $name,
             '--module' => $module,
-        ]);
+        ];
+        if ($guard = $this->option('guard')) {
+            $arguments['--guard'] = $guard;
+        }
+        $this->call('make:request', $arguments);
     }
 
     protected function createResponse(string $name, string $module)
     {
-        $this->call('make:response', [
+        $arguments = [
             'name'     => $name,
             '--module' => $module,
-        ]);
+        ];
+        if ($guard = $this->option('guard')) {
+            $arguments['--guard'] = $guard;
+        }
+        $this->call('make:response', $arguments);
     }
 
     protected function createService(string $name, string $module)
     {
-        $this->call('make:service', [
+        $arguments = [
             'name'     => $name,
             '--module' => $module,
-        ]);
+        ];
+        if ($guard = $this->option('guard')) {
+            $arguments['--guard'] = $guard;
+        }
+        $this->call('make:service', $arguments);
     }
 }

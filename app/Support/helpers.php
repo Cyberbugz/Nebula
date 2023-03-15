@@ -14,6 +14,7 @@ if (!function_exists('app_modules')) {
 
 if (!function_exists('get_module_path')) {
     function get_module_path(string $module, array $subdirectories): string {
+        $subdirectories = array_filter($subdirectories);
         return implode(DIRECTORY_SEPARATOR, [modules_path(), ucfirst($module), ...$subdirectories]);
     }
 }

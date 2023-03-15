@@ -6,7 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 class {{ class }} extends TestCase
 {
-    /** @test */
+    /**
+     * @test
+     * {{ moduleGroup }}
+     */
     public function example(): void
     {
         $this->assertTrue(true);
