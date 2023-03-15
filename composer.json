@@ -1,5 +1,12 @@
 {
     "name": "mansonxasthur/nebula",
+    "authors": [
+        {
+            "name": "Manson Xasthur",
+            "email": "mansonx13@gmail.com",
+            "role": "Architect"
+        }
+    ],
     "version": "v3.0.0",
     "type": "project",
     "description": "Nebula is a modularized Laravel framework.",
