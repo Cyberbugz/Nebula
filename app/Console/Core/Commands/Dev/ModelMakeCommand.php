@@ -10,18 +10,22 @@ class ModelMakeCommand extends BaseModelMakeCommand
 {
     use OptionsExtender;
 
-    protected string|null $module;
-
-    public function handle()
+    protected function checkModulePath(array $arguments): array
     {
-        $this->module = $this->option('module');
-        return parent::handle();
+        if ($this->option('module')) {
+            $arguments['--module'] = $this->option('module');
+        }
+
+        if ($this->option('absolute')) {
+            $arguments['--absolute'] = $this->option('absolute');
+        }
+        return $arguments;
     }
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($this->module)) {
-            return get_module_namespace($rootNamespace, $this->module, ['Domain', 'Entities']);
+        if (!is_null($this->option('module'))) {
+            return get_module_namespace($rootNamespace, $this->option('module'), ['Domain', 'Entities']);
         }
         return parent::getDefaultNamespace($rootNamespace);
     }
@@ -33,9 +37,7 @@ class ModelMakeCommand extends BaseModelMakeCommand
             'name' => "{$factory}Factory",
         ];
 
-        if ($this->module) {
-            $arguments['--module'] = $this->module;
-        }
+        $arguments = $this->checkModulePath($arguments);
         $this->call('make:factory', $arguments);
     }
 
@@ -53,9 +55,7 @@ class ModelMakeCommand extends BaseModelMakeCommand
             '--fullpath' => true,
         ];
 
-        if ($this->module) {
-            $arguments['--module'] = $this->module;
-        }
+        $arguments = $this->checkModulePath($arguments);
 
         $this->call('make:migration', $arguments);
     }
@@ -68,9 +68,7 @@ class ModelMakeCommand extends BaseModelMakeCommand
             'name' => "{$seeder}Seeder",
         ];
 
-        if ($this->module) {
-            $arguments['--module'] = $this->module;
-        }
+        $arguments = $this->checkModulePath($arguments);
 
         $this->call('make:seeder', $arguments);
     }
@@ -82,15 +80,13 @@ class ModelMakeCommand extends BaseModelMakeCommand
         $modelName = $this->qualifyClass($this->getNameInput());
 
         $arguments = [
-            'name' => "{$controller}Controller",
-            '--model' => ($this->option('resource') || $this->option('api')) && !$this->module ? $modelName : null,
-            '--api' => $this->option('api'),
+            'name'       => "{$controller}Controller",
+            '--model'    => ($this->option('resource') || $this->option('api')) && !$this->option('module') ? $modelName : null,
+            '--api'      => $this->option('api'),
             '--requests' => $this->option('requests') || $this->option('all'),
         ];
 
-        if ($this->module) {
-            $arguments['--module'] = $this->module;
-        }
+        $arguments = $this->checkModulePath($arguments);
 
         $this->call('make:controller', array_filter($arguments));
     }
@@ -104,9 +100,7 @@ class ModelMakeCommand extends BaseModelMakeCommand
             '--model' => '\\' . $this->qualifyClass($this->getNameInput()),
         ];
 
-        if ($this->module) {
-            $arguments['--module'] = $this->module;
-        }
+        $arguments = $this->checkModulePath($arguments);
 
         $this->call('make:policy', $arguments);
     }

@@ -13,7 +13,7 @@ trait ModelQualifier
         $model = str_replace('/', '\\', $model);
         $rootNamespace = $this->rootNamespace();
 
-        if (($startsWithRoot = Str::startsWith($model, $rootNamespace)) || Str::startsWith($model, 'Modules')) {
+        if (($startsWithRoot = Str::startsWith($model, $rootNamespace)) || Str::startsWith($model, config('app.modules_path'))) {
             return $startsWithRoot ? $model : $rootNamespace . $model;
         }
 

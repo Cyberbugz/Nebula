@@ -11,8 +11,8 @@ class JobMakeCommand extends BaseJobMakeCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($targetModule = $this->input->getOption('module'))) {
-            return get_module_namespace($rootNamespace, $targetModule,
+        if (!is_null($module = $this->option('module'))) {
+            return get_module_namespace($rootNamespace, $module,
                 [
                     'Manager',
                     'Jobs'

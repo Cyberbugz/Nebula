@@ -21,9 +21,6 @@ class StoryMakeCommand extends Command
         $name   = $this->argument('name');
         $module = $this->argument('module');
         $this->createController($name, $module);
-        $this->createRequest($name, $module);
-        $this->createResponse($name, $module);
-        $this->createService($name, $module);
         $this->createTest($name, $module);
     }
 
@@ -32,30 +29,7 @@ class StoryMakeCommand extends Command
         $this->call('make:controller', [
             'name'     => $name,
             '--module' => $module,
-        ]);
-    }
-
-    protected function createRequest(string $name, string $module)
-    {
-        $this->call('make:request', [
-            'name'     => $name,
-            '--module' => $module,
-        ]);
-    }
-
-    protected function createResponse(string $name, string $module)
-    {
-        $this->call('make:response', [
-            'name'     => $name,
-            '--module' => $module,
-        ]);
-    }
-
-    protected function createService(string $name, string $module)
-    {
-        $this->call('make:service', [
-            'name'     => $name,
-            '--module' => $module,
+            '--all' => true,
         ]);
     }
 

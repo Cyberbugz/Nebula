@@ -12,7 +12,7 @@ class SeederMakeCommand extends BaseSeederMakeCommand
 
     protected function getDefaultNamespace($rootNamespace): string
     {
-        if (!is_null($module = $this->input->getOption('module'))) {
+        if (!is_null($module = $this->option('module'))) {
             if (str_starts_with($rootNamespace, $this->rootNamespace())) {
                 return $rootNamespace;
             }
@@ -44,7 +44,7 @@ class SeederMakeCommand extends BaseSeederMakeCommand
 
     protected function rootNamespace(): string
     {
-        if (!is_null($module = $this->input->getOption('module'))) {
+        if (!is_null($module = $this->option('module'))) {
             return get_module_namespace($this->laravel->getNamespace(), $module,
                 [
                     'Domain',
