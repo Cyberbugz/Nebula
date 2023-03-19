@@ -34,12 +34,25 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function registerModuleApiRoutes()
     {
-        $registrar = Route::prefix('api')->middleware('api');
+        $this->registerModuleRoutes('api');
+    }
 
-        $modulesPath = base_path('app/Modules');
+    protected function registerModuleRoutes(string $prefix, string $middleware = null, string $routesFileName = null)
+    {
+        if (! $middleware) {
+            $middleware = $prefix;
+        }
+
+        if (! $routesFileName) {
+            $routesFileName = $prefix;
+        }
+
+        $registrar = Route::prefix($prefix)->middleware($middleware);
+
+        $modulesPath = modules_path();
         $modules = array_filter(scandir($modulesPath), fn ($module) => ! in_array($module, ['.', '..']));
         foreach ($modules as $module) {
-            $apiRoutes = $modulesPath.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR.'Routes/api.php';
+            $apiRoutes = $modulesPath.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR."Routes/$routesFileName.php";
             if (file_exists($apiRoutes)) {
                 $registrar->group($apiRoutes);
             }

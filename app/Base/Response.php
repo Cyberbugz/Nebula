@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Responses\ErrorResponse;
 use App\Base\Contracts\ResponseInterface;
+use Illuminate\Auth\AuthenticationException;
 use App\Base\Contracts\RequestHandlerInterface;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Base\Contracts\RestrictEventInjectionInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Exceptions\Response\EventInjectionRestrictedException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 abstract class Response implements ResponseInterface
 {
@@ -38,6 +40,9 @@ abstract class Response implements ResponseInterface
             $this->fireSuccessChain($data);
 
             return $this->createResource($data);
+        } catch (UnauthorizedHttpException|AuthenticationException $e) {
+            $this->fireFailureChain($request);
+            return $this->error($e);
         } catch (Throwable $e) {
             $this->logError($handler, $request, $e);
             $this->fireFailureChain($request);
