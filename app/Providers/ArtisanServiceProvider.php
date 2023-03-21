@@ -17,6 +17,7 @@ use Illuminate\Routing\Console\MiddlewareMakeCommand;
 use App\Console\Core\Commands\Dev\ResponseMakeCommand;
 use Illuminate\Foundation\Console\ListenerMakeCommand;
 use Illuminate\Foundation\Console\ResourceMakeCommand;
+use Illuminate\Foundation\Console\ObserverMakeCommand;
 use Illuminate\Foundation\Console\ExceptionMakeCommand;
 use App\Console\Core\Commands\Dev\RepositoryMakeCommand;
 use Illuminate\Database\Console\Seeds\SeederMakeCommand;
@@ -172,6 +173,13 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton(RepositoryMakeCommand::class, function ($app) {
             return new RepositoryMakeCommand($app['files']);
+        });
+    }
+
+    protected function registerObserverMakeCommand()
+    {
+        $this->app->singleton(ObserverMakeCommand::class, function ($app) {
+            return new \App\Console\Core\Commands\Dev\ObserverMakeCommand($app['files']);
         });
     }
 }
