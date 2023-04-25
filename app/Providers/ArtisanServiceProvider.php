@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Console\JobMakeCommand;
+use Illuminate\Database\Console\Seeds\SeedCommand;
 use Illuminate\Foundation\Console\CastMakeCommand;
 use Illuminate\Foundation\Console\MailMakeCommand;
 use Illuminate\Foundation\Console\TestMakeCommand;
@@ -16,8 +17,8 @@ use Illuminate\Routing\Console\ControllerMakeCommand;
 use Illuminate\Routing\Console\MiddlewareMakeCommand;
 use App\Console\Core\Commands\Dev\ResponseMakeCommand;
 use Illuminate\Foundation\Console\ListenerMakeCommand;
-use Illuminate\Foundation\Console\ResourceMakeCommand;
 use Illuminate\Foundation\Console\ObserverMakeCommand;
+use Illuminate\Foundation\Console\ResourceMakeCommand;
 use Illuminate\Foundation\Console\ExceptionMakeCommand;
 use App\Console\Core\Commands\Dev\RepositoryMakeCommand;
 use Illuminate\Database\Console\Seeds\SeederMakeCommand;
@@ -180,6 +181,13 @@ class ArtisanServiceProvider extends BaseArtisanServiceProvider
     {
         $this->app->singleton(ObserverMakeCommand::class, function ($app) {
             return new \App\Console\Core\Commands\Dev\ObserverMakeCommand($app['files']);
+        });
+    }
+
+    protected function registerSeedCommand()
+    {
+        $this->app->singleton(SeedCommand::class, function ($app) {
+            return new \App\Console\Core\Commands\Database\SeedCommand($app['db']);
         });
     }
 }

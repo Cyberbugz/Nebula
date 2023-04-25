@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth:api'])->group(function () {
-});
+Route::name('api.users.')->group(function () {
+    Route::middleware(['auth:api'])->group(function () {
+    });
 
-Route::post('login', \App\Modules\User\Http\Controllers\UserLoginController::class);
-Route::post('register', \App\Modules\User\Http\Controllers\UserRegistrationController::class);
+    Route::post('login', \App\Modules\User\Http\Controllers\UserLoginController::class)->name('login');
+    Route::post('register', \App\Modules\User\Http\Controllers\UserRegistrationController::class)->name('register');
+});

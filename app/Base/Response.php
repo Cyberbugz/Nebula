@@ -8,10 +8,12 @@ use App\Support\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Responses\ErrorResponse;
+use Illuminate\Http\RedirectResponse;
 use App\Base\Contracts\ResponseInterface;
 use Illuminate\Auth\AuthenticationException;
 use App\Base\Contracts\RequestHandlerInterface;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use App\Base\Contracts\RestrictEventInjectionInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use App\Exceptions\Response\EventInjectionRestrictedException;
@@ -33,7 +35,7 @@ abstract class Response implements ResponseInterface
 
     private bool $silence = false;
 
-    public function send(RequestHandlerInterface $handler, Request $request): JsonResponse|JsonResource|LengthAwarePaginator
+    public function send(RequestHandlerInterface $handler, Request $request): JsonResponse|JsonResource|LengthAwarePaginator|StreamedResponse|RedirectResponse
     {
         try {
             $data = call_user_func([$handler, 'handle'], $this, $request);
@@ -41,11 +43,12 @@ abstract class Response implements ResponseInterface
 
             return $this->createResource($data);
         } catch (UnauthorizedHttpException|AuthenticationException $e) {
-            $this->fireFailureChain($request);
+            $this->fireFailureChain($request, $e);
+
             return $this->error($e);
         } catch (Throwable $e) {
             $this->logError($handler, $request, $e);
-            $this->fireFailureChain($request);
+            $this->fireFailureChain($request, $e);
 
             return $this->error($e);
         }
@@ -136,17 +139,17 @@ abstract class Response implements ResponseInterface
         $this->success($resource);
     }
 
-    final protected function fireFailureChain(Request $request): void
+    final protected function fireFailureChain(Request $request, Throwable $e = null): void
     {
         if ($this->silence) {
             return;
         }
 
         foreach ($this->onFailureHandlers as $handler) {
-            $handler($request);
+            $handler($request, $e);
         }
 
-        $this->failure($request);
+        $this->failure($request, $e);
     }
 
     final protected function buildLogBody(Request $request, Throwable $e): array
@@ -167,7 +170,7 @@ abstract class Response implements ResponseInterface
         //
     }
 
-    protected function failure(Request $request): void
+    protected function failure(Request $request, Throwable|null $e): void
     {
         //
     }
@@ -177,5 +180,5 @@ abstract class Response implements ResponseInterface
         return false;
     }
 
-    abstract protected function createResource(mixed $resource): JsonResponse|JsonResource|LengthAwarePaginator;
+    abstract protected function createResource(mixed $resource): JsonResponse|JsonResource|LengthAwarePaginator|StreamedResponse|RedirectResponse;
 }

@@ -15,9 +15,10 @@ trait OptionsExtender
             ['absolute', 'A', InputOption::VALUE_OPTIONAL, 'Specify absolute modules path.'],
         ]);
 
-        if (!$this->hasGuardOption($options)) {
+        if (! $this->hasGuardOption($options)) {
             $options[] = ['guard', 'G', InputOption::VALUE_OPTIONAL, 'Specify guard environment.'];
         }
+
         return $options;
     }
 
@@ -34,6 +35,7 @@ trait OptionsExtender
                 return true;
             }
         }
+
         return false;
     }
 }

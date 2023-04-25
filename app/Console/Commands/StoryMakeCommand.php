@@ -28,9 +28,9 @@ class StoryMakeCommand extends Command
     protected function createController(string $name, string $module, string|null $guard)
     {
         $arguments = [
-            'name' => $name,
+            'name'     => $name,
             '--module' => $module,
-            '--all' => true,
+            '--all'    => true,
         ];
 
         if ($guard) {
@@ -43,7 +43,7 @@ class StoryMakeCommand extends Command
     protected function createTest(string $name, string $module, string|null $guard)
     {
         $arguments = [
-            'name' => $name,
+            'name'     => $name,
             '--module' => $module,
         ];
 
