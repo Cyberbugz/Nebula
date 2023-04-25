@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\User\Services;
+namespace App\Modules\User\Core\Services;
 
 use Illuminate\Support\Facades\Config;
 use App\Modules\User\Domain\Dto\UserRegistrationData;

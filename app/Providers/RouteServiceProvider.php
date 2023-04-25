@@ -32,12 +32,12 @@ class RouteServiceProvider extends ServiceProvider
         });
     }
 
-    protected function registerModuleApiRoutes()
+    protected function registerModuleApiRoutes(): void
     {
         $this->registerModuleRoutes('api');
     }
 
-    protected function registerModuleRoutes(string $prefix, string $middleware = null, string $routesFileName = null)
+    protected function registerModuleRoutes(string $prefix, string $middleware = null, string $routesFileName = null): void
     {
         if (! $middleware) {
             $middleware = $prefix;
@@ -52,7 +52,7 @@ class RouteServiceProvider extends ServiceProvider
         $modulesPath = modules_path();
         $modules = array_filter(scandir($modulesPath), fn ($module) => ! in_array($module, ['.', '..']));
         foreach ($modules as $module) {
-            $apiRoutes = $modulesPath.DIRECTORY_SEPARATOR.$module.DIRECTORY_SEPARATOR."Routes/$routesFileName.php";
+            $apiRoutes = implode(DIRECTORY_SEPARATOR, [$modulesPath, $module, 'Http', 'Routes', "$routesFileName.php"]);
             if (file_exists($apiRoutes)) {
                 $registrar->group($apiRoutes);
             }

@@ -5,7 +5,7 @@ namespace App\Modules\User\Tests\Feature\Api;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 use Symfony\Component\HttpFoundation\Response;
-use App\Modules\User\Manager\Events\UserRegistered;
+use App\Modules\User\Core\Events\UserRegistered;
 
 class UserRegistrationTest extends TestCase
 {

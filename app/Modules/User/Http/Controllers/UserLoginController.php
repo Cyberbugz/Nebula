@@ -5,10 +5,10 @@ namespace App\Modules\User\Http\Controllers;
 use App\Base\Controller;
 use Illuminate\Http\Request;
 use App\Base\Contracts\ResponseInterface;
-use App\Modules\User\Services\UserLoginService;
 use App\Modules\User\Http\Requests\UserLoginRequest;
 use App\Modules\User\Domain\Dto\UserLoginCredentials;
 use App\Modules\User\Http\Responses\UserLoginResponse;
+use App\Modules\User\Core\Services\UserLoginService;
 use App\Modules\User\Domain\ViewModels\Contracts\AuthenticatedUserModelInterface;
 
 class UserLoginController extends Controller
