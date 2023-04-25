@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
     protected function loadModuleCommands()
     {
         foreach (app_modules() as $module) {
-            $moduleCommands = get_module_path($module, ['Manager', 'Commands']);
+            $moduleCommands = get_module_path($module, ['Core', 'Commands']);
             if (file_exists($moduleCommands)) {
                 $this->load($moduleCommands);
             }

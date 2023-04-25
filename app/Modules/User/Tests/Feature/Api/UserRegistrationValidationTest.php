@@ -20,13 +20,13 @@ class UserRegistrationValidationTest extends TestCase
     {
         User::query()
         ->firstOrCreate(User::factory()->state(['email' => 'john.doe@example.com'])->make()->toArray());
-        $res = $this->json('post', '/api/register', $given);
+        $res = $this->json('post', route('api.users.register'), $given);
         $res->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $res->assertJsonValidationErrorFor($errorField);
         $res->assertJsonFragment([$expected]);
     }
 
-    public function validations(): array
+    public static function validations(): array
     {
         return [
             'first name field is required' => [

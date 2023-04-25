@@ -2,11 +2,11 @@
 
 namespace App\Modules\User\Http\Responses;
 
-use App\Base\Response;
+use Dust\Base\Response;
 use Illuminate\Http\JsonResponse;
+use App\Modules\User\Core\Events\UserRegistered;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Modules\User\Http\Resources\UserResource;
-use App\Modules\User\Manager\Events\UserRegistered;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpFoundation\Response as SymphonyResponse;
 
