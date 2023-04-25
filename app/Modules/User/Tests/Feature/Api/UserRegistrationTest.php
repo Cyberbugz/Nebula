@@ -35,10 +35,10 @@ class UserRegistrationTest extends TestCase
     {
         Event::fake();
         $userData = [
-            'first_name'            => $this->faker->firstName(),
-            'last_name'             => $this->faker->lastName(),
-            'email'                 => $this->faker->email(),
-            'password'              => $p = $this->faker->password(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'email' => $this->faker->email(),
+            'password' => $p = $this->faker->password(),
             'password_confirmation' => $p,
         ];
 

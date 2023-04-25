@@ -2,13 +2,13 @@
 
 namespace App\Modules\User\Http\Controllers;
 
-use App\Base\Controller;
+use Dust\Base\Controller;
 use Illuminate\Http\Request;
-use App\Base\Contracts\ResponseInterface;
+use Dust\Base\Contracts\ResponseInterface;
 use App\Modules\User\Domain\Dto\UserRegistrationData;
+use App\Modules\User\Core\Services\UserRegistrationService;
 use App\Modules\User\Http\Requests\UserRegistrationRequest;
 use App\Modules\User\Http\Responses\UserRegistrationResponse;
-use App\Modules\User\Core\Services\UserRegistrationService;
 
 class UserRegistrationController extends Controller
 {

@@ -19,7 +19,7 @@ class UserLoginTest extends TestCase
         $user = User::factory()->state(['password' => bcrypt($password)])->create();
         $this->assertDatabaseCount('users', 1);
         $res = $this->json('post', route('api.users.login'), [
-            'email'    => $user->email,
+            'email' => $user->email,
             'password' => $password,
         ]);
 
@@ -37,7 +37,7 @@ class UserLoginTest extends TestCase
         $password = $this->faker->password();
         $user = User::factory()->state(['password' => bcrypt($password)])->create();
         $res = $this->json('post', route('api.users.login'), [
-            'email'    => $user->email,
+            'email' => $user->email,
             'password' => 'secret',
         ]);
 

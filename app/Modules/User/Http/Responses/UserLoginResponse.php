@@ -3,9 +3,9 @@
 namespace App\Modules\User\Http\Responses;
 
 use Throwable;
-use App\Base\Response;
+use Dust\Base\Response;
 use Illuminate\Http\JsonResponse;
-use App\Http\Responses\ErrorResponse;
+use Dust\Http\Responses\ErrorResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Modules\User\Http\Resources\UserResource;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;

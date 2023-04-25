@@ -2,7 +2,7 @@
 
 namespace App\Modules\User\Domain\Repositories;
 
-use App\Base\Repository;
+use Dust\Base\Repository;
 use App\Modules\User\Domain\Entities\User;
 
 class UserRepository extends Repository

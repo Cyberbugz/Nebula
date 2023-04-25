@@ -183,8 +183,12 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
+         * Dust Service Providers...
          */
+        //        \Dust\Providers\EventServiceProvider::class,
+        //        \Dust\Providers\RouteServiceProvider::class,
+        //        \Dust\Providers\MigrationServiceProvider::class,
+        //        \Dust\Providers\ArtisanServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -192,10 +196,6 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\MigrationServiceProvider::class,
-        App\Providers\ArtisanServiceProvider::class,
     ],
 
     /*
