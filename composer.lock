@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb05c0dbde19cef7ff748da8e9261051",
+    "content-hash": "d5a5a7454a98be468f83af3044e67550",
     "packages": [
         {
             "name": "brick/math",
@@ -64,16 +64,16 @@
         },
         {
             "name": "cyberbugz/dust",
-            "version": "v2.0.2",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Cyberbugz/dust.git",
-                "reference": "ba5437bb6e7b2a8a77100f305af1c240a5bd9175"
+                "reference": "2e1071d1bc90780c748bac805e547c5744e8b907"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Cyberbugz/dust/zipball/ba5437bb6e7b2a8a77100f305af1c240a5bd9175",
-                "reference": "ba5437bb6e7b2a8a77100f305af1c240a5bd9175",
+                "url": "https://api.github.com/repos/Cyberbugz/dust/zipball/2e1071d1bc90780c748bac805e547c5744e8b907",
+                "reference": "2e1071d1bc90780c748bac805e547c5744e8b907",
                 "shasum": ""
             },
             "require": {
@@ -116,9 +116,9 @@
             "description": "The Nebula project dust.",
             "support": {
                 "issues": "https://github.com/Cyberbugz/dust/issues",
-                "source": "https://github.com/Cyberbugz/dust/tree/v2.0.2"
+                "source": "https://github.com/Cyberbugz/dust/tree/v2.1.0"
             },
-            "time": "2023-04-25T19:33:06+00:00"
+            "time": "2023-05-10T10:40:34+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
