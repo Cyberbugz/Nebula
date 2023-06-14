@@ -65,7 +65,7 @@ return [
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/fdw.log'),
+            'path' => storage_path('logs/nebula.log'),
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 7,
         ],
