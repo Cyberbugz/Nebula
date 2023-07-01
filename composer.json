@@ -7,14 +7,14 @@
             "role": "Architect"
         }
     ],
-    "version": "v4.0.6",
+    "version": "v5.0.0",
     "type": "project",
     "description": "Nebula is a modularized Laravel framework.",
     "keywords": ["framework", "laravel", "nebula"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "cyberbugz/dust": "^v2.0",
+        "cyberbugz/dust": "^v3.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
