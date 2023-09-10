@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('', function () {
     return response()->json(['code' => \Symfony\Component\HttpFoundation\Response::HTTP_OK,
-        'message' => 'Welcome to testing arena!',
+        'message' => 'Welcome to your playground!',
     ]);
 });
