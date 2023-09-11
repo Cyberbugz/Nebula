@@ -7,7 +7,7 @@
             "role": "Architect"
         }
     ],
-    "version": "v7.0.0",
+    "version": "v7.0.1",
     "type": "project",
     "description": "Nebula is a modularized Laravel framework.",
     "keywords": ["framework", "laravel", "nebula"],
