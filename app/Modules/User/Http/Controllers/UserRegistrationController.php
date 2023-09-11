@@ -3,6 +3,8 @@
 namespace App\Modules\User\Http\Controllers;
 
 use Dust\Base\Controller;
+use Dust\Http\Router\Attributes\Route;
+use Dust\Http\Router\Enum\Http;
 use Illuminate\Http\Request;
 use Dust\Base\Contracts\ResponseInterface;
 use App\Modules\User\Domain\Dto\UserRegistrationData;
@@ -10,6 +12,7 @@ use App\Modules\User\Core\Services\UserRegistrationService;
 use App\Modules\User\Http\Requests\UserRegistrationRequest;
 use App\Modules\User\Http\Responses\UserRegistrationResponse;
 
+#[Route(Http::POST, 'register', 'api.users.register')]
 class UserRegistrationController extends Controller
 {
     public function __construct(UserRegistrationResponse $response, UserRegistrationRequest $request, protected UserRegistrationService $service)
