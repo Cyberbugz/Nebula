@@ -33,7 +33,7 @@ class Handler extends ExceptionHandler
                 return response()->json(['code' => Response::HTTP_OK, 'message' => sprintf('Welcome to %s portal api.', Config::get('app.name'))]);
             }
 
-            return response()->json(['code' => Response::HTTP_NOT_FOUND, 'message' => 'Sometimes the most scenic roads in life are the detours you didn\'t mean to take.'], Response::HTTP_NOT_FOUND);
+            return response()->json(['code' => Response::HTTP_NOT_FOUND, 'message' => 'Sometimes the most scenic roads in life are the detours you didn\'t mean to take. In your case is not, you are lost man!!'], Response::HTTP_NOT_FOUND);
         });
 
         $this->renderable(function (AuthenticationException $e) {
