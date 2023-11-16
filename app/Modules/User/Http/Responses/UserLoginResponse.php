@@ -21,7 +21,7 @@ class UserLoginResponse extends Response
             ->additional(['token' => $resource->token()]);
     }
 
-    protected function handleErrorResponse(Throwable $e): bool|JsonResponse
+    protected function handleErrorResponse(Throwable $e): false|JsonResponse
     {
         if ($e instanceof UnauthorizedHttpException) {
             return new ErrorResponse($e->getMessage(), status: $e->getStatusCode());
